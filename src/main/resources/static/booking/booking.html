@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đặt Trang Phục Online</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* CSS riêng cho trang Booking để chia layout */
+        .booking-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .section {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex: 1 1 45%; /* Chia đôi màn hình */
+            min-width: 400px;
+        }
+        .full-width {
+            flex: 1 1 100%;
+        }
+        .highlight {
+            color: #dc3545; /* Màu đỏ */
+            font-weight: bold;
+            font-size: 1.3em;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        /* CSS cho bảng cuộn được nếu danh sách dài */
+        .table-scroll {
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid #eee;
+        }
+    </style>
+</head>
+<body>
+<div class="container" style="max-width: 1200px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="margin: 0;">Đặt Lịch Thuê Trang Phục</h2>
+        <a href="/" class="btn btn-secondary">🏠 Về Trang Chủ</a>
+    </div>
+    <hr>
+
+    <div class="booking-container">
+
+        <div class="section" id="section-customer">
+            <h3 style="color: #0056b3;">1. Thông tin Khách hàng</h3>
+            <div class="form-group">
+                <label>Số điện thoại khách hàng <span style="color:red">*</span>:</label>
+                <div style="display: flex; gap: 10px;">
+                    <input type="text" id="txtCustomerPhone" placeholder="Nhập SĐT (ví dụ: 0912...)" style="flex: 1;">
+                    <button id="btnFindCustomer" class="btn btn-primary">🔍 Tìm/Tạo</button>
+                </div>
+            </div>
+
+            <div id="customerInfoArea" style="display: none; margin-top: 15px; background: #e9ecef; padding: 15px; border-radius: 5px;">
+                <p style="margin: 5px 0;"><strong>Họ tên:</strong> <span id="lblCustomerName" style="color: #007bff;">---</span></p>
+                <p style="margin: 5px 0;"><strong>Điểm tích lũy:</strong> <span id="lblLoyaltyPoints" style="color: #28a745; font-weight: bold;">0</span> điểm</p>
+                <p style="font-size: 0.9em; color: #666; margin: 5px 0;">(Khách hàng thân thiết sẽ được ưu đãi giảm giá tự động)</p>
+                <input type="hidden" id="hidCustomerId">
+            </div>
+        </div>
+
+        <div class="section" id="section-product-list">
+            <h3 style="color: #0056b3;">2. Chọn Trang Phục</h3>
+            <div class="form-group" style="display: flex; gap: 10px;">
+                <input type="text" id="txtSearchCostume" placeholder="Nhập tên trang phục..." style="flex: 1;">
+                <button id="btnSearchCostume" class="btn btn-primary">🔍 Tìm</button>
+            </div>
+
+            <div class="table-scroll">
+                <table id="tblCostumeList">
+                    <thead style="position: sticky; top: 0; z-index: 1;">
+                    <tr>
+                        <th>ID</th>
+                        <th>Tên trang phục</th>
+                        <th>Size</th>
+                        <th>Giá thuê/ngày</th>
+                        <th>Tồn</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tbodyCostumeList">
+                    <tr><td colspan="6" style="text-align: center;">Đang tải dữ liệu...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section full-width" id="section-cart">
+            <h3 style="color: #0056b3;">3. Giỏ hàng (Các món đã chọn)</h3>
+
+            <div style="background: #fff3cd; padding: 15px; margin-bottom: 15px; border: 1px solid #ffeeba; border-radius: 5px; display: flex; align-items: center; gap: 20px;">
+                <div style="flex: 1;">
+                    <label style="font-size: 0.9em;">Đang chọn:</label>
+                    <strong id="lblSelectedCostumeName" style="color: #856404; font-size: 1.1em;">(Vui lòng chọn từ danh sách trên)</strong>
+                    <input type="hidden" id="txtSelectedCostumeId">
+                    <input type="hidden" id="txtSelectedCostumePrice">
+                </div>
+                <div style="width: 100px;">
+                    <label>Số lượng:</label>
+                    <input type="number" id="txtQuantity" value="1" min="1">
+                </div>
+                <div style="align-self: flex-end;">
+                    <button id="btnAddToCart" class="btn btn-success" disabled>🛒 Thêm vào giỏ</button>
+                </div>
+            </div>
+
+            <table id="tblCart">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên trang phục</th>
+                    <th>Đơn giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                    <th>Xóa</th>
+                </tr>
+                </thead>
+                <tbody id="tbodyCart">
+                <tr><td colspan="6" style="text-align: center; color: #999;">Giỏ hàng trống</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section full-width" id="section-checkout" style="background-color: #f8f9fa; border: 1px solid #ddd;">
+            <h3 style="color: #0056b3;">4. Xác nhận Đơn hàng</h3>
+
+            <div style="display: flex; gap: 40px;">
+                <div style="flex: 1;">
+                    <div class="form-group">
+                        <label>Ngày bắt đầu thuê <span style="color:red">*</span>:</label>
+                        <input type="date" id="dtpStartDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày dự kiến trả <span style="color:red">*</span>:</label>
+                        <input type="date" id="dtpEndDate">
+                    </div>
+                    <div class="form-group">
+                        <label>Mã Khuyến Mãi (Nếu có):</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="txtPromoCode" placeholder="Nhập mã (VD: CHAOHE2025)">
+                            <button id="btnApplyPromo" class="btn btn-secondary">Áp dụng</button>
+                        </div>
+                        <span id="lblPromoMessage" style="font-size: 0.9em; margin-top: 5px; display: block;"></span>
+                    </div>
+                </div>
+
+                <div style="flex: 1; background: white; padding: 20px; border-radius: 8px; border: 1px solid #eee;">
+                    <div class="summary-row">
+                        <span>Tiền hàng tạm tính:</span>
+                        <span id="lblTotalAmount">0 đ</span>
+                    </div>
+                    <div class="summary-row" style="color: green;">
+                        <span>Giảm giá (Voucher/VIP):</span>
+                        <span id="lblDiscountAmount">- 0 đ</span>
+                    </div>
+                    <hr>
+                    <div class="summary-row">
+                        <strong>Tổng tiền thuê:</strong>
+                        <strong id="lblAfterDiscount">0 đ</strong>
+                    </div>
+                    <div class="summary-row" style="color: #666; font-size: 0.9em;">
+                        <i>Cần đặt cọc trước (30%):</i>
+                        <i id="lblDepositAmount">0 đ</i>
+                    </div>
+
+                    <div style="margin-top: 20px; text-align: right;">
+                        <p style="font-size: 0.9em; color: #dc3545; margin-bottom: 5px;">* Vui lòng kiểm tra kỹ thông tin trước khi xác nhận</p>
+                        <button id="btnConfirmBooking" class="btn btn-danger" style="width: 100%; padding: 15px; font-size: 1.2em; text-transform: uppercase;">
+                            Xác Nhận Đặt Hàng
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="/js/api-config.js"></script>
+<script src="/js/booking.js"></script>
+
+</body>
+</html>
