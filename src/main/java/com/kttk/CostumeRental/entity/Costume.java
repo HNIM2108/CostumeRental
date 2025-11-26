@@ -2,6 +2,7 @@ package com.kttk.CostumeRental.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import java.math.BigDecimal;
 
 @Entity
 @Table(name = "tbl_costume")
@@ -9,9 +10,27 @@ import lombok.Data;
 public class Costume {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
     private String size;
-    private double rentalPrice;
+    private String color;
+
+    @Column(name = "rental_price")
+    private Double rentalPrice;
+
+    @Column(name = "deposit_price")
+    private Double depositPrice;
+
+    @Column(name = "quantity_available")
     private int quantityAvailable;
-    private String status; // Available, Rented
+
+    @Column(name = "image_url")
+    private String imageUrl;
+
+    private String status;
+
+    // Quan hệ với Category (Nếu bạn chưa tạo class Category thì tạm thời để comment)
+     @ManyToOne
+     @JoinColumn(name = "category_id")
+     private Category category;
 }

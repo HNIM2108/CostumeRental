@@ -6,6 +6,8 @@ import com.kttk.CostumeRental.DTO.RevenueReportItem;
 import com.kttk.CostumeRental.pattern.strategy.IStatisticStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -15,7 +17,7 @@ public class StatisticService {
     @Autowired private PaymentDAO paymentDAO;
     @Autowired private BillDAO billDAO;
 
-    private IStatisticStrategy strategy; // Chiến lược hiện tại
+    private IStatisticStrategy strategy;
 
     public void setStrategy(IStatisticStrategy strategy) {
         this.strategy = strategy;
@@ -25,7 +27,15 @@ public class StatisticService {
         if (strategy == null) {
             throw new RuntimeException("Chưa chọn loại báo cáo!");
         }
-        // Ủy quyền cho Strategy tính toán, truyền DAO vào
+        if (end != null) {
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(end);
+            cal.set(Calendar.HOUR_OF_DAY, 23);
+            cal.set(Calendar.MINUTE, 59);
+            cal.set(Calendar.SECOND, 59);
+            cal.set(Calendar.MILLISECOND, 999);
+            end = cal.getTime();
+        }
         return strategy.calculateRevenue(start, end, paymentDAO, billDAO);
     }
 }

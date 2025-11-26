@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo Thống Kê</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        /* CSS riêng cho trang Thống kê */
+        .filter-bar {
+            background: #fff;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-end;
+            margin-bottom: 30px;
+        }
+
+        .summary-cards {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            flex: 1;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            text-align: center;
+            border-left: 5px solid #ddd;
+        }
+
+        .card.green { border-left-color: #28a745; }
+        .card.blue { border-left-color: #007bff; }
+
+        .card h4 { margin: 0 0 10px 0; color: #666; font-size: 0.9em; text-transform: uppercase; }
+        .card .value { font-size: 1.8em; font-weight: bold; color: #333; }
+
+        .table-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+<div class="container" style="max-width: 1100px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2 style="margin: 0;">Thống Kê Doanh Thu</h2>
+        <a href="/" class="btn btn-secondary">🏠 Về Trang Chủ</a>
+    </div>
+    <hr>
+
+    <div class="filter-bar" id="section-filter">
+        <div class="form-group" style="flex: 2; min-width: 200px;">
+            <label>Loại báo cáo:</label>
+            <select id="cboReportType">
+                <option value="CASH_FLOW">💰 Dòng tiền thực thu (Cash Flow)</option>
+                <option value="SALES">📈 Doanh số bán hàng (Sales)</option>
+            </select>
+            <small style="color: #666; font-style: italic;">
+                * Cash Flow: Tiền thực tế đã thu (Cọc, Thanh toán).<br>
+                * Sales: Tổng giá trị các hóa đơn đã chốt.
+            </small>
+        </div>
+
+        <div class="form-group" style="flex: 1; min-width: 150px;">
+            <label>Từ ngày:</label>
+            <input type="date" id="dtpStartDate">
+        </div>
+
+        <div class="form-group" style="flex: 1; min-width: 150px;">
+            <label>Đến ngày:</label>
+            <input type="date" id="dtpEndDate">
+        </div>
+
+        <div class="form-group">
+            <button id="btnViewReport" class="btn btn-primary" style="height: 42px; min-width: 120px;">
+                📊 Xem Báo Cáo
+            </button>
+        </div>
+    </div>
+
+    <div id="section-result" style="display: none;">
+
+        <h3 id="lblReportTitle" style="text-align: center; margin-bottom: 20px; color: #0056b3;"></h3>
+
+        <div class="summary-cards">
+            <div class="card green">
+                <h4>Tổng Doanh Thu</h4>
+                <div class="value" id="lblTotalRevenue" style="color: #28a745;">0 đ</div>
+            </div>
+            <div class="card blue">
+                <h4>Tổng Số Giao Dịch / Đơn</h4>
+                <div class="value" id="lblOrderCount" style="color: #007bff;">0</div>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="tblResult">
+                <thead id="theadResult">
+                <tr>
+                    <th style="width: 50px;">STT</th>
+                    <th style="width: 100px;">Mã KH</th>
+                    <th>Tên Khách Hàng</th>
+                    <th style="width: 150px; text-align: center;">Số Lần GD</th>
+                    <th style="width: 200px; text-align: right;">Doanh Thu</th>
+                </tr>
+                </thead>
+                <tbody id="tbodyResult">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script src="/js/api-config.js"></script>
+<script src="/js/statistics.js"></script>
+
+</body>
+</html>

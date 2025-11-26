@@ -16,7 +16,7 @@ public class PaymentDAO extends DAO {
 
     // --- HÀM MỚI: Thống kê Thực thu ---
     public List<RevenueReportItem> getRevenueByPayment(Date start, Date end) {
-        String jpql = "SELECT new com.kttk.CostumeRental.dto.RevenueReportItem(" +
+        String jpql = "SELECT new com.kttk.CostumeRental.DTO.RevenueReportItem(" +
                 "c.id, c.fullName, SUM(p.amount), COUNT(p)) " +
                 "FROM Payment p " +
                 "JOIN p.bill b " +

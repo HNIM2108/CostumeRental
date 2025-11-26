@@ -59,8 +59,8 @@ public class BookingController {
     @DeleteMapping("/cart/item/{id}")
     public ResponseEntity<?> removeCartItem(@PathVariable Long id) {
         try {
-            cartService.removeFromCart(id);
-            return ResponseEntity.ok("Đã xóa sản phẩm khỏi giỏ");
+            ICommand command = new RemoveFromCartCommand(cartService, id);
+            return ResponseEntity.ok(command.execute());
         } catch (Exception e) {
             return ResponseEntity.badRequest().body("Lỗi xóa: " + e.getMessage());
         }

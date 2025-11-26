@@ -16,4 +16,10 @@ public class CostumeDAO extends DAO {
                 .setParameter("name", "%" + name + "%").getResultList();
     }
     public Costume getById(Long id) { return entityManager.find(Costume.class, id); }
+
+    public void updateCostume(Costume costume) {
+        if (costume.getId() != null) {
+            entityManager.merge(costume);
+        }
+    }
 }

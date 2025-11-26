@@ -11,6 +11,7 @@ public class CartService {
     @Autowired private CartDAO cartDAO;
     @Autowired private CustomerDAO customerDAO;
     @Autowired private CostumeDAO costumeDAO;
+    @Autowired private CartItemDAO cartItemDAO;
 
     @Transactional
     public void addToCart(Long customerId, Long costumeId, int quantity) {
@@ -68,8 +69,8 @@ public class CartService {
     }
 
     @Transactional
-    public void removeFromCart(Long cartItemId) {
-        // Gọi hàm xóa của CartDAO
-        cartDAO.removeCartItem(cartItemId);
+    public void removeItem(Long cartItemId) {
+        // Gọi trực tiếp CartItemDAO theo đúng thiết kế phân rã
+        cartItemDAO.deleteById(cartItemId);
     }
 }

@@ -14,7 +14,6 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public List<Customer> getAllCustomers() {
-        // Gọi hàm của Class DAO
         return customerDAO.getAllCustomers();
     }
 
@@ -31,13 +30,31 @@ public class CustomerServiceImpl implements ICustomerService {
 
     @Override
     public Customer saveCustomer(Customer customer) {
-        if(customer.getRole() == null) customer.setRole("CUSTOMER");
-
-        // Tách logic Add và Update rõ ràng nếu muốn, hoặc dùng chung logic kiểm tra ID
         if (customer.getId() == null) {
+            if (customer.getUsername() == null || customer.getUsername().isEmpty()) {
+                customer.setUsername(customer.getPhone());
+            }
+            if (customer.getPassword() == null || customer.getPassword().isEmpty()) {
+                customer.setPassword("123456");
+            }
+            customer.setRole("CUSTOMER");
+            customer.setStatus(true);
+
             return customerDAO.addCustomer(customer);
         } else {
-            return customerDAO.updateCustomer(customer);
+            Customer existingCustomer = customerDAO.findById(customer.getId());
+
+            if (existingCustomer != null) {
+                existingCustomer.setFullName(customer.getFullName());
+                existingCustomer.setPhone(customer.getPhone());
+                existingCustomer.setEmail(customer.getEmail());
+                existingCustomer.setAddress(customer.getAddress());
+                existingCustomer.setLoyaltyPoints(customer.getLoyaltyPoints());
+
+                return customerDAO.updateCustomer(existingCustomer);
+            } else {
+                throw new RuntimeException("Khách hàng không tồn tại để cập nhật!");
+            }
         }
     }
 
