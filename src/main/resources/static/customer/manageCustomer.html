@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản lý Khách hàng</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2>Danh Sách Khách Hàng</h2>
+        <a href="/" class="btn btn-secondary">🏠 Về Trang Chủ</a>
+    </div>
+
+    <div class="toolbar">
+        <input type="text" id="txtSearch" placeholder="Nhập tên hoặc số điện thoại để tìm..." style="flex: 1;">
+        <button id="btnSearch" class="btn btn-primary">🔍 Tìm kiếm</button>
+        <a href="addCustomer.html" class="btn btn-success">➕ Thêm Khách Hàng</a>
+    </div>
+
+    <table id="tblCustomer">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Họ và Tên</th>
+            <th>Số điện thoại</th>
+            <th>Email</th>
+            <th>Điểm</th>
+            <th style="width: 150px;">Thao tác</th>
+        </tr>
+        </thead>
+        <tbody id="tbodyCustomer">
+        </tbody>
+    </table>
+</div>
+
+<script src="/js/api-config.js"></script>
+<script src="/js/manage-customer.js"></script>
+</body>
+</html>

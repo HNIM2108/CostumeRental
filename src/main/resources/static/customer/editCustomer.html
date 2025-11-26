@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Sửa Khách Hàng</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container" style="max-width: 600px;">
+    <h2>Cập Nhật Thông Tin</h2>
+
+    <form id="formEdit">
+        <input type="hidden" id="hidId">
+
+        <div class="form-group">
+            <label>Họ và Tên <span style="color:red">*</span>:</label>
+            <input type="text" id="name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Số điện thoại <span style="color:red">*</span>:</label>
+            <input type="text" id="phone" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email:</label>
+            <input type="email" id="email">
+        </div>
+
+        <div class="form-group">
+            <label>Địa chỉ:</label>
+            <input type="text" id="address">
+        </div>
+
+        <div class="form-group">
+            <label>Điểm tích lũy (Read-only):</label>
+            <input type="number" id="points" readonly style="background-color: #e9ecef;">
+        </div>
+
+        <div style="text-align: center; margin-top: 30px;">
+            <button type="submit" class="btn btn-primary">Cập Nhật</button>
+            <a href="manageCustomer.html" class="btn btn-secondary">Hủy Bỏ</a>
+        </div>
+    </form>
+</div>
+
+<script src="/js/api-config.js"></script>
+<script>
+    // Lấy ID từ URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const id = urlParams.get('id');
+
+    // 1. Load dữ liệu cũ khi vào trang
+    window.onload = async () => {
+        if (!id) {
+            alert("Không tìm thấy ID khách hàng!");
+            window.location.href = "manageCustomer.html";
+            return;
+        }
+
+        try {
+            const res = await fetch(`${API_BASE_URL}/customers/${id}`);
+            if (!res.ok) throw new Error("Khách hàng không tồn tại");
+
+            const c = await res.json();
+
+            // Điền dữ liệu vào form
+            document.getElementById("hidId").value = c.id;
+            document.getElementById("name").value = c.fullName;
+            document.getElementById("phone").value = c.phone;
+            document.getElementById("email").value = c.email || "";
+            document.getElementById("address").value = c.address || "";
+            document.getElementById("points").value = c.loyaltyPoints;
+        } catch (err) {
+            alert("Lỗi: " + err.message);
+            window.location.href = "manageCustomer.html";
+        }
+    };
+
+    // 2. Xử lý sự kiện Submit form
+    document.getElementById("formEdit").onsubmit = async (e) => {
+        e.preventDefault();
+
+        const customerData = {
+            id: id,
+            fullName: document.getElementById("name").value.trim(),
+            phone: document.getElementById("phone").value.trim(),
+            email: document.getElementById("email").value.trim(),
+            address: document.getElementById("address").value.trim(),
+            loyaltyPoints: document.getElementById("points").value
+        };
+
+        try {
+            const res = await fetch(`${API_BASE_URL}/customers/${id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(customerData)
+            });
+
+            if (res.ok) {
+                alert("Cập nhật thành công!");
+                window.location.href = "manageCustomer.html";
+            } else {
+                const errText = await res.text();
+                alert("Lỗi: " + errText);
+            }
+        } catch (err) {
+            console.error(err);
+            alert("Lỗi kết nối Server!");
+        }
+    };
+</script>
+</body>
+</html>

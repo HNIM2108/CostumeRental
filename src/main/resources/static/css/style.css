@@ -1,0 +1,87 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f6f9;
+    margin: 0;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+h2 { text-align: center; color: #2c3e50; margin-bottom: 30px; }
+
+/* Form Elements */
+.form-group { margin-bottom: 20px; }
+label { display: block; margin-bottom: 8px; font-weight: 600; color: #555; }
+input, select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 14px;
+}
+input:focus { border-color: #007bff; outline: none; }
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+.btn-primary { background-color: #007bff; }
+.btn-primary:hover { background-color: #0056b3; }
+.btn-success { background-color: #28a745; }
+.btn-success:hover { background-color: #218838; }
+.btn-danger { background-color: #dc3545; }
+.btn-danger:hover { background-color: #c82333; }
+.btn-secondary { background-color: #6c757d; }
+.btn-secondary:hover { background-color: #5a6268; }
+.btn-sm { padding: 5px 10px; font-size: 12px; }
+
+/* Table */
+table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+th, td { border-bottom: 1px solid #eee; padding: 15px; text-align: left; }
+th { background-color: #f8f9fa; color: #333; font-weight: bold; border-top: 1px solid #ddd; }
+tr:hover { background-color: #fbfbfb; }
+
+/* Toolbar */
+.toolbar {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+}
+
+/* Menu Dashboard */
+.dashboard-menu { display: flex; justify-content: center; gap: 30px; margin-top: 40px; }
+.menu-item {
+    background: white;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    width: 260px;
+    padding: 40px 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    text-decoration: none;
+    color: #444;
+}
+.menu-item:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); border-color: #007bff; }
+.menu-item .icon { font-size: 50px; margin-bottom: 20px; display: block; }
+.menu-item .title { font-size: 1.4em; font-weight: bold; color: #2c3e50; margin-bottom: 10px; }
