@@ -9,7 +9,6 @@ import java.util.List;
 public class CashFlowStrategy implements IStatisticStrategy {
     @Override
     public List<RevenueReportItem> calculateRevenue(Date start, Date end, PaymentDAO pDao, BillDAO bDao) {
-        // Chiến lược này chỉ dùng PaymentDAO
         return pDao.getRevenueByPayment(start, end);
     }
 }

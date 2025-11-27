@@ -10,11 +10,7 @@ import java.util.List;
 @Repository
 @Transactional
 public class PaymentDAO extends DAO {
-
-    // ... (các hàm save cũ) ...
     public void createPayment(Payment p) { entityManager.persist(p); }
-
-    // --- HÀM MỚI: Thống kê Thực thu ---
     public List<RevenueReportItem> getRevenueByPayment(Date start, Date end) {
         String jpql = "SELECT new com.kttk.CostumeRental.DTO.RevenueReportItem(" +
                 "c.id, c.fullName, SUM(p.amount), COUNT(p)) " +

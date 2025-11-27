@@ -27,7 +27,6 @@ public class StatisticController {
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date end) {
 
         try {
-            // 1. Chọn chiến lược dựa trên tham số 'type'
             if ("CASH_FLOW".equals(type)) {
                 statisticService.setStrategy(new CashFlowStrategy());
             } else if ("SALES".equals(type)) {
@@ -36,7 +35,6 @@ public class StatisticController {
                 return ResponseEntity.badRequest().body("Loại báo cáo không hợp lệ!");
             }
 
-            // 2. Thực thi
             List<RevenueReportItem> report = statisticService.generateReport(start, end);
             return ResponseEntity.ok(report);
 

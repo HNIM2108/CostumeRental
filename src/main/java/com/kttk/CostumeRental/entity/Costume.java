@@ -29,7 +29,6 @@ public class Costume {
 
     private String status;
 
-    // Quan hệ với Category (Nếu bạn chưa tạo class Category thì tạm thời để comment)
      @ManyToOne
      @JoinColumn(name = "category_id")
      private Category category;

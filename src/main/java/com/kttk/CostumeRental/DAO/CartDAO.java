@@ -23,7 +23,6 @@ public class CartDAO extends DAO {
     public void removeCartItem(Long cartItemId) {
         CartItem item = entityManager.find(CartItem.class, cartItemId);
         if (item != null) {
-            // Cần xóa khỏi list của Cart cha để đồng bộ (nếu đang trong session)
             if (item.getCart() != null) {
                 item.getCart().getItems().remove(item);
             }

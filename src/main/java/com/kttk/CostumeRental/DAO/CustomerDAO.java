@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Repository
-@Transactional // Để thực hiện các thao tác Ghi/Xóa
+@Transactional
 public class CustomerDAO extends DAO {
 
     public List<Customer> getAllCustomers() {

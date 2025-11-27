@@ -1,6 +1,6 @@
 package com.kttk.CostumeRental.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty; // Thêm import
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.Date;

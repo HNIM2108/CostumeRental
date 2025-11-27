@@ -1,15 +1,10 @@
-// manage-customer.js
-
 document.addEventListener("DOMContentLoaded", () => {
     loadCustomers();
-
-    // Bắt sự kiện tìm kiếm
     document.getElementById("btnSearch").addEventListener("click", () => {
         const keyword = document.getElementById("txtSearch").value;
         loadCustomers(keyword);
     });
 
-    // Tìm kiếm khi nhấn Enter
     document.getElementById("txtSearch").addEventListener("keypress", (e) => {
         if (e.key === 'Enter') {
             loadCustomers(e.target.value);
@@ -19,7 +14,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 async function loadCustomers(keyword = "") {
     try {
-        // Gọi API Backend
         const url = keyword
             ? `${API_BASE_URL}/customers?search=${encodeURIComponent(keyword)}`
             : `${API_BASE_URL}/customers`;
@@ -69,7 +63,7 @@ async function deleteCustomer(id) {
         const res = await fetch(`${API_BASE_URL}/customers/${id}`, { method: "DELETE" });
         if (res.ok) {
             alert("Đã xóa thành công!");
-            loadCustomers(); // Tải lại danh sách
+            loadCustomers();
         } else {
             alert("Xóa thất bại!");
         }

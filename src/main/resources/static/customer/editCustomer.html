@@ -46,11 +46,9 @@
 
 <script src="/js/api-config.js"></script>
 <script>
-    // Lấy ID từ URL
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get('id');
 
-    // 1. Load dữ liệu cũ khi vào trang
     window.onload = async () => {
         if (!id) {
             alert("Không tìm thấy ID khách hàng!");
@@ -64,7 +62,6 @@
 
             const c = await res.json();
 
-            // Điền dữ liệu vào form
             document.getElementById("hidId").value = c.id;
             document.getElementById("name").value = c.fullName;
             document.getElementById("phone").value = c.phone;
@@ -77,7 +74,6 @@
         }
     };
 
-    // 2. Xử lý sự kiện Submit form
     document.getElementById("formEdit").onsubmit = async (e) => {
         e.preventDefault();
 

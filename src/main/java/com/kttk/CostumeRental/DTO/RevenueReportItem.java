@@ -11,5 +11,5 @@ public class RevenueReportItem {
     private Long customerId;
     private String customerName;
     private Double totalRevenue;
-    private Long transactionCount; // Số lần giao dịch/Số hóa đơn
+    private Long transactionCount;
 }

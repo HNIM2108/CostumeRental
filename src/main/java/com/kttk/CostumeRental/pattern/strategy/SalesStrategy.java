@@ -9,7 +9,6 @@ import java.util.List;
 public class SalesStrategy implements IStatisticStrategy {
     @Override
     public List<RevenueReportItem> calculateRevenue(Date start, Date end, PaymentDAO pDao, BillDAO bDao) {
-        // Chiến lược này chỉ dùng BillDAO
         return bDao.getRevenueByBill(start, end);
     }
 }

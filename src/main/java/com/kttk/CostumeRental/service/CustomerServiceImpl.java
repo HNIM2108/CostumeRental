@@ -10,7 +10,7 @@ import java.util.List;
 public class CustomerServiceImpl implements ICustomerService {
 
     @Autowired
-    private CustomerDAO customerDAO; // Inject trực tiếp Class DAO
+    private CustomerDAO customerDAO;
 
     @Override
     public List<Customer> getAllCustomers() {

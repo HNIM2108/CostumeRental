@@ -10,15 +10,11 @@ import java.util.List;
 @Repository
 @Transactional
 public class BillDAO extends DAO {
-
-    // Hàm tạo hóa đơn (giữ nguyên)
     public void createBill(Bill b) {
         entityManager.persist(b);
     }
 
-    // Hàm thống kê doanh thu theo hóa đơn (Sửa đường dẫn JPQL)
     public List<RevenueReportItem> getRevenueByBill(Date start, Date end) {
-        // LƯU Ý: Trong chuỗi JPQL bên dưới, tôi đã đổi 'dto' thành 'DTO'
         String jpql = "SELECT new com.kttk.CostumeRental.DTO.RevenueReportItem(" +
                 "c.id, c.fullName, CAST(SUM(b.finalAmount) AS double), COUNT(b)) " +
                 "FROM Bill b " +

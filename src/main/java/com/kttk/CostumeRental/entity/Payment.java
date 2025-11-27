@@ -18,5 +18,5 @@ public class Payment {
 
     private double amount;
     private Date paymentDate;
-    private String note; // "Deposit"
+    private String note;
 }

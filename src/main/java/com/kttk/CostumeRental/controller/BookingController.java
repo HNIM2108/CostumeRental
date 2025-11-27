@@ -21,7 +21,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class BookingController {
 
-    @Autowired private CostumeDAO costumeDAO; // Gọi thẳng DAO cho luồng Read
+    @Autowired private CostumeDAO costumeDAO;
     @Autowired private CartService cartService;
     @Autowired private BookingService bookingService;
 
@@ -39,19 +39,17 @@ public class BookingController {
     public ResponseEntity<?> getCart(@RequestParam Long customerId) {
         Cart cart = cartDAO.findByCustomerId(customerId);
         if (cart == null) {
-            return ResponseEntity.ok().body(List.of()); // Trả về list rỗng nếu chưa có giỏ
+            return ResponseEntity.ok().body(List.of());
         }
-        return ResponseEntity.ok(cart.getItems()); // Trả về danh sách CartItem
+        return ResponseEntity.ok(cart.getItems());
     }
     @PostMapping("/cart/add")
     public ResponseEntity<?> addToCart(@RequestParam Long customerId, @RequestParam Long costumeId, @RequestParam int quantity) {
 
         try {
-            // Gọi Service (có thể bọc trong Command nếu muốn đúng pattern)
             ICommand command = new AddToCartCommand(cartService, customerId, costumeId, quantity);
             return ResponseEntity.ok(command.execute());
         } catch (Exception e) {
-            // --- SỬA LỖI: Trả về message lỗi đơn giản ---
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
@@ -79,7 +77,7 @@ public class BookingController {
     public ResponseEntity<?> checkPromotion(
             @RequestParam String code,
             @RequestParam double totalAmount,
-            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date rentalDate) { // Thêm tham số này
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date rentalDate) {
         try {
             var promotion = promotionDAO.findByCode(code);
 
@@ -87,12 +85,10 @@ public class BookingController {
                 return ResponseEntity.badRequest().body("Mã không tồn tại!");
             }
 
-            // 1. KIỂM TRA THỜI GIAN (Dựa trên ngày thuê khách chọn)
             if (rentalDate.before(promotion.getStartDate()) || rentalDate.after(promotion.getEndDate())) {
                 return ResponseEntity.badRequest().body("Mã này không áp dụng cho ngày thuê bạn chọn!");
             }
 
-            // 2. KIỂM TRA GIÁ TRỊ ĐƠN HÀNG
             if (totalAmount < promotion.getMinOrderValue()) {
                 long minVal = (long) promotion.getMinOrderValue();
                 return ResponseEntity.badRequest().body("Đơn hàng phải từ " + minVal + " đ mới được áp dụng!");

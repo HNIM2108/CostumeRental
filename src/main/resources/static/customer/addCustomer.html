@@ -42,7 +42,6 @@
     document.getElementById("formAdd").onsubmit = async (e) => {
         e.preventDefault();
 
-        // Thu thập dữ liệu
         const customer = {
             fullName: document.getElementById("name").value.trim(),
             phone: document.getElementById("phone").value.trim(),
@@ -59,7 +58,7 @@
 
             if (res.ok) {
                 alert("Thêm khách hàng thành công!");
-                window.location.href = "manageCustomer.html"; // Chuyển về danh sách
+                window.location.href = "manageCustomer.html";
             } else {
                 const errText = await res.text();
                 alert("Lỗi: " + errText);
